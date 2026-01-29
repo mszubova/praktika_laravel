@@ -10,7 +10,7 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
-* { box-sizing: border-box; }
+/* * { box-sizing: border-box; }
 body { margin: 0; font-family: Arial, sans-serif; }
 
 .wrap { max-width: 1100px; margin: 0 auto; padding: 16px; }
@@ -60,4 +60,338 @@ body { margin: 0; font-family: Arial, sans-serif; }
 
 .card__price {
     font-weight: 700;
+} */
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #e6efff; /* общий фон страницы */
 }
+
+.container{
+  width: min(1200px, calc(100% - 80px));
+  margin: 0 auto;
+}
+
+.header{
+  background: #fff;
+}
+
+.header__inner{
+  height: 90px;           
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header__logo img{
+  display: block;
+  height: 48px;           
+}
+
+/* ===== user dropdown (без JS) ===== */
+.user{
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+
+.user__summary{
+  list-style: none;
+  cursor: pointer;
+  font-weight: 700;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+
+  height: 24px;           /* фиксируем, чтобы ничего не прыгало */
+  line-height: 24px;
+}
+
+
+
+/* это стрелка у ФИО*/
+.user__arrow {
+  background-image: url("../img/arrow.svg");
+  width: 12px;
+  height: 8px;
+  flex: 0 0 12px;        /* не сжимается и не растягивается */
+  display: inline-block;
+
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+/* чтобы стрелка поворачивалась при нажатии*/
+.user[open] .user__arrow {
+  transform: rotate(180deg);
+}
+
+
+/* убираем стандартный треугольник в Chrome/Safari */
+.user__summary::-webkit-details-marker{
+  display: none;
+}
+
+.user__logout{
+  position: absolute;
+  right: 0;
+  top: calc(100% + 12px); 
+  width: 220px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #fff;
+  border: 2px solid #1e40ff;  /* синий контур как в макете (примерно) */
+  border-radius: 6px;
+}
+
+/* ===== основная зона страницы ===== */
+.page-content {
+  padding: 38px 0 70px; /* сверху и снизу, как в макете */
+}
+
+
+/* ===== кнопка "создать заявление" ===== */
+.btn-create {
+  background: #ff0000;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 14px 26px;
+
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+
+  text-decoration: none;   /* ВАЖНО */
+  display: inline-flex;    /* чтобы <a> вел себя как кнопка */
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== сетка карточек ===== */
+.cards {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+/* ===== карточка ===== */
+.card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 28px 28px 24px;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+
+.card__date {
+  margin: 0 0 8px;
+  color: #ff0000;
+  font-weight: 700;
+}
+
+.card__number {
+  margin: 0 0 18px;
+  font-weight: 700;
+}
+
+.card__text {
+  margin: 0;
+  line-height: 1.5;
+  flex-grow: 1;          /* КЛЮЧЕВО для Laravel-карточек */
+}
+
+.card__status {
+  margin: 20px 0 0;
+  
+}
+
+.crumbs{
+  background: #fff;
+  padding: 14px 18px;
+  border-top: 1px solid #d9d9d9;
+  border-bottom: 1px solid #d9d9d9;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  font-weight: 700;
+}
+.crumbs__link{
+  color: #000;
+  text-decoration: none;
+}
+
+.crumbs__link:hover{
+  text-decoration: underline;
+}
+
+.crumbs__current{
+  color: #000;
+}
+
+.crumbs__sep{
+  color: #000;
+}
+
+
+.claim-form{
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+  align-items: flex-start; /* важно: элементы не растягиваются */
+}
+
+
+/* общие поля */
+
+
+.field--small{
+  width: 340px;     /* как на макете — узкое поле */
+  height: 44px;
+}
+
+.field--big{
+  width: 720px;     /* широкое поле */
+  height: 210px;    /* высокое поле */
+  resize: none;     /* чтобы не тянули мышью */
+}
+
+.field{
+  border: 2px solid #1e40ff;
+  border-radius: 6px;
+  padding: 12px 14px;
+  outline: none;
+  background: #fff;
+
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+  font-weight: 400;
+  color: #111;
+}
+.field::placeholder{
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #7a7a7a;
+}
+textarea.field{
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+/* ===== AUTH PAGE ===== */
+.auth{
+  min-height: 100vh;
+  background: #e6efff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.auth-card{
+  width: 760px;
+  background: #fff;
+  border-radius: 60px;
+  padding: 80px 40px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth-logo{
+  height: 58px;
+  display: block;
+  margin-bottom: 40px;
+}
+
+.auth-title{
+  margin: 0 0 26px;
+  font-size: 36px;
+  font-weight: 400;
+  color: #1e40ff;
+}
+
+.auth-form{
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  align-items: center;
+}
+
+.auth-field{
+  width: 100%;
+  height: 44px;
+  border: 2px solid #1e40ff;
+  border-radius: 6px;
+  padding: 0 14px;
+
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  color: #111;
+  outline: none;
+  background: #fff;
+}
+
+.auth-field::placeholder{
+  color: #7a7a7a;
+}
+
+.auth-btn{
+  width: 100%;
+  height: 44px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+
+  background: #0b1fff;
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+
+.auth-link{
+  color: #1e40ff;
+  text-decoration: none;
+  font-size: 16px;
+  margin-top: -6px;
+}
+
+.auth-link:hover{
+  text-decoration: underline;
+}
+
+
+
