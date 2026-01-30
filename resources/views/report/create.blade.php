@@ -1,4 +1,5 @@
-@extends('layouts.app')
+@extends('layouts.site')
+
 
 @section('title', 'Создание заявления')
 
@@ -37,3 +38,4 @@
   </section>
 </main>
 @endsection
+
